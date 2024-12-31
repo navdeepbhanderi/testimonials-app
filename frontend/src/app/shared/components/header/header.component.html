@@ -1,0 +1,21 @@
+<header class="absolute w-full z-30 border-b border-gray-800">
+    <div class="container mx-auto">
+        <div class="flex items-center justify-between h-20">
+            <div class="flex-shrink-0 mr-4"><a class="flex flex-row"
+                    aria-label="Logo" href="/"><img loading="lazy"
+                        class="h-10 fill-current text-purple-600"
+                        src="https://s3.ap-south-1.amazonaws.com/navdeep.dev/logo.svg"
+                        alt="Logo"></a>
+            </div>
+                <div class="relative flex-shrink-0 pl-4 ml-4">
+                    <div class="relative inline-block text-left">
+                        <div>
+                            <a [routerLink]="['/login']" class="card flex justify-center">
+                                <p-button label="Login" severity="contrast" />
+                            </a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</header>
