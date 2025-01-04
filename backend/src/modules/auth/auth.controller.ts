@@ -1,17 +1,18 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Prisma } from '@prisma/client';
 import { Request } from 'express';
 import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
 import { LocalAuthGuard } from 'src/common/guards/local.guard';
 import { GoogleAuthGuard } from 'src/common/guards/google.guard';
+import { UserDto } from './dto/user.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('signup')
-  signup(@Body() userPayload: Prisma.UsersCreateInput) {
+  signup(@Body() userPayload: UserDto) {
     return this.authService.createUser(userPayload)
   }
 
@@ -31,6 +32,12 @@ export class AuthController {
   @Get('google/redirect')
   handleRedirect(@Req() request: Request) {
     return this.authService.login(request.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  getUserDetails(@Param('id', ParseIntPipe) id:string) {
+    return
   }
 
   @UseGuards(JwtAuthGuard)
