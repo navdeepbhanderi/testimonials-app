@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common';
+import { BadGatewayException, Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Prisma } from '@prisma/client';
 import { Request } from 'express';
@@ -12,8 +12,13 @@ export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('signup')
-  signup(@Body() userPayload: UserDto) {
-    return this.authService.createUser(userPayload)
+  async signup(@Body() userPayload: UserDto) {
+    const createUser = await this.authService.createUser(userPayload);
+    if (createUser) {
+      return { message: 'We have registerd you self, Please login to continue', status: true }
+    } else {
+      throw BadGatewayException;
+    }
   }
 
   @UseGuards(LocalAuthGuard)

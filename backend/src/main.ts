@@ -20,6 +20,11 @@ async function bootstrap() {
   }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.enableCors({
+    origin: 'http://localhost:4200', // Replace with your frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // If you need to send cookies or authorization headers
+  });
   const port = configService.get<number>('APP_PORT')
   await app.listen(port);
 }
