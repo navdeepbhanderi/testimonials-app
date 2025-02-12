@@ -15,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: Prisma.UsersCreateInput) {
+        console.log(payload, 'payload')
         return payload;
     }    
 }

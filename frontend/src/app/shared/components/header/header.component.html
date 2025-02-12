@@ -1,0 +1,24 @@
+<header class="absolute w-full z-30 border-b border-gray-800">
+    <div class="container mx-auto">
+        <div class="flex items-center justify-between h-20">
+            <div class="flex-shrink-0 mr-4"><a class="flex flex-row" aria-label="Logo" href="/"><img loading="lazy"
+                        class="h-10 fill-current text-purple-600"
+                        src="https://s3.ap-south-1.amazonaws.com/navdeep-public.dev/testimonials.svg" alt="Logo"></a>
+            </div>
+            <div class="relative flex-shrink-0 pl-4 ml-4 buttons">
+                <div class="relative inline-block text-left">
+                    <div *ngIf="!authService.userLoggedIn">
+                        <a [routerLink]="['/login']" class="card flex justify-center">
+                            <p-button label="Login" severity="contrast" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card flex justify-center" *ngIf="authService.userLoggedIn">
+                <p-menu #menu [model]="items" [popup]="true" />
+                <p-button class="profile-btn" severity="contrast"  *ngIf="authService?.userDetails?.profilePicture" (click)="menu.toggle($event)"><img class="profile-picture"  (onerror)="profileError()" [src]="authService?.userDetails?.profilePicture" alt=""></p-button>
+                <p-button class="profile-btn-none" severity="contrast"  *ngIf="!authService?.userDetails?.profilePicture" (click)="menu.toggle($event)">{{authService?.userDetails?.email[0]}}</p-button>
+            </div>
+        </div>
+    </div>
+</header>

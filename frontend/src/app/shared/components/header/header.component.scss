@@ -1,0 +1,39 @@
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+}
+
+:host {
+    ::ng-deep .profile-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50px;
+
+        button {
+            padding: 0px;
+            background-color: transparent;
+            border: none;
+            border-radius: 50px;
+
+            &:hover {
+                border: none;
+                background-color: transparent;
+            }
+        }
+    }    
+
+    ::ng-deep .profile-btn-none {
+        width: 40px;
+        height: 40px;
+        border-radius: 50px;
+        
+        button {
+            width: 40px;
+            height: 40px;
+            padding: 0px;
+            border-radius: 50px;
+            text-transform: uppercase;
+        }
+    }    
+}
