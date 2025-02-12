@@ -16,6 +16,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(accessToken: string, refreshToken: string, profile: Profile) {
+        console.log(profile, 'profile')
         const { id, displayName, emails, photos } = profile;
         const createUser = await this.authService.validateUserWithGoogleAuth({
             email: emails[0].value,
@@ -23,6 +24,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
             profilePicture: photos[0].value,
             googleId: id
         });
+        console.log(createUser, 'createUser')
         return createUser || null;
     }
 }

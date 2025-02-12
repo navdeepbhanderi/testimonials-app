@@ -15,6 +15,7 @@ export class AuthService {
             const { password, ...result } = findUser;
             console.log(__dirname)
             // this.sendEmailService.sendMail({ to: User.email, text: 'Logged in successfull', subject: 'login' })
+            console.log(result, 'result')
             return result;
         }
 
@@ -35,8 +36,9 @@ export class AuthService {
     }
 
     async login(user: any) {
-        const payload = { email: user.email, id: user.id };
-        return { access_token: this.jwtService.sign(payload) };
+        console.log(user, 'payload user')
+        const { createdAt, googleId, password, updatedAt, ...userPayload } = user;
+        return { access_token: this.jwtService.sign(userPayload) };
     }
 
     async validateUserWithGoogleAuth(User: Prisma.UsersCreateInput) {

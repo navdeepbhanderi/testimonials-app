@@ -1,7 +1,7 @@
-import { BadGatewayException, Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common';
+import { BadGatewayException, Body, Controller, Get, Param, ParseIntPipe, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Prisma } from '@prisma/client';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
 import { LocalAuthGuard } from 'src/common/guards/local.guard';
 import { GoogleAuthGuard } from 'src/common/guards/google.guard';
@@ -35,19 +35,21 @@ export class AuthController {
 
   @UseGuards(GoogleAuthGuard)
   @Get('google/redirect')
-  handleRedirect(@Req() request: Request) {
-    return this.authService.login(request.user);
+  async handleRedirect(@Req() request: Request, @Res() res: Response) {
+    const token = await this.authService.login(request.user);
+    res.redirect(`http://localhost:4200/dashboard?token=${token.access_token}`);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  getUserDetails(@Param('id', ParseIntPipe) id:string) {
-    return
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Get(':id')
+  // getUserDetails(@Param('id', ParseIntPipe) id:number, @Req() request: Request) {
+  //   return request.user;
+  // }
 
   @UseGuards(JwtAuthGuard)
   @Get('status')
   getStatus(@Req() request: Request) {
-    return request.user;
+    const { id, exp, iat, ...user }: any = request.user;
+    return user;
   }
 }
