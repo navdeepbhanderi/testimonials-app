@@ -22,6 +22,49 @@ model Users {
   profilePicture String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-
+  testimonials Testimonial[]
   @@index([email])
+}
+
+model Testimonial {
+  id Int @default(autoincrement()) @id 
+  space_name String
+  space_logo_url String
+  space_logo_type Boolean @default(false)
+  title String
+  message String
+  questions String
+  collect_extra_info String
+  collection_type String
+  choose_theme String
+  start_rating Boolean @default(false)
+  image_url String
+  notification_info Notification?
+  extra_info ExtraTestimonialInfo?
+  user Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id Int
+}
+
+model ExtraTestimonialInfo {
+  id Int @default(autoincrement()) @id 
+  thankyou_title String
+  thankyou_message String
+  question_label String
+  max_video_duration Int
+  video_button_text String
+  text_button_text String
+  button_color String
+  consent_display String
+  consent_statement String
+  testimonial Testimonial @relation(fields: [testimonial_id], references: [id], onDelete: Cascade)
+  testimonial_id Int @unique
+} 
+model Notification {
+  id Int @default(autoincrement()) @id 
+  sender_name String
+  reply_address String
+  subject String
+  message String 
+  testimonial Testimonial @relation(fields: [testimonial_id], references: [id], onDelete: Cascade)
+  testimonial_id Int @unique
 }

@@ -7,9 +7,10 @@ import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { UploadModule } from './modules/upload/upload.module';
 import { SendEmailModule } from './common/send-email/send-email.module';
+import { TestimonialModule } from './modules/testimonial/testimonial.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }), DatabaseModule, AuthModule, PassportModule.register({ session: true }), UploadModule, SendEmailModule],
+  imports: [ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }), DatabaseModule, AuthModule, PassportModule.register({ session: true }), UploadModule, SendEmailModule, TestimonialModule],
   controllers: [AppController],
   providers: [AppService],
 })
